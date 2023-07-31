@@ -34,6 +34,6 @@ Ten projekt znajduje się we wczesnej fazie, wszystkie pliki zostały dostarczon
 ## Różne
 
 - [Status projektu](../guide/polski/status.md)
-- [Rozwiązywanie problemów](../guide/english/troubleshooting-en.md)
-- [Instrukcje aktualizacji sterowników](../guide/english/update-en.md)
-- [Sterowanie systemem Windows za pomocą RDP](../guide/english/rdp-en.md)
+- [Rozwiązywanie problemów](../guide/polski/rozwiazywanie-problemow.md)
+- [Instrukcje aktualizacji sterowników](../guide/polski/Aktualizacja.md)
+- [Sterowanie systemem Windows za pomocą RDP](../guide/polski/rdp.md)
