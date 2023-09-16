@@ -1,132 +1,131 @@
-<img align="right" src="https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE/blob/main/lisa.png" width="250" alt="Windows 11 Running On a Mi 11 Lite NE">
+<img align="right" src="https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE/blob/main/lisa.png" width="250" alt="Windows 11 działający na Mi 11 Lite NE">.
 
 
-# Uruchamianie systemu Windows na Xiaomi Mi 11 Lite NE/Mi 11 LE
+# Uruchamianie systemu Windows na Mi 11 Lite NE/Mi 11 LE
 
 ## Instalacja systemu Windows
 
 ### Wymagania wstępne
 
-- [Obraz systemu Windows na architekturę ARM (zalecany Windows 11)](https://uupdump.net/)
-- [Najnowszy obraz UEFI skompilowany ze źródłowego kodu edk2-ms](https://github.com/edk2-porting/edk2-msm)
-- [Obraz UEFI TYLKO do instalacji Windows!!](https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE/releases/download/v0.0.1/boot-lisa-install.img)
+- [Obraz Windows na ARM (zalecany Windows 11)](https://uupdump.net/)
+- Najnowszy obraz UEFI skompilowany z kodu źródłowego edk2-msm](https://github.com/edk2-porting/edk2-msm)
+- [Obraz UEFI do TYLKO instalacji systemu Windows!!!](https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE/releases/download/v0.0.1/boot-lisa-install.img)
 - [DriverUpdater](https://github.com/WOA-Project/DriverUpdater/releases/latest)
-- [Sterowniki](https://github.com/Icesito68/7xx-Drivers) (Kliknij na strzałkę "Get Code" i pobierz jako zip)
+- [Sterowniki](https://github.com/Icesito68/7xx-Drivers) (kliknij strzałkę Pobierz kod i pobierz jako zip)
 
-#### Rozruch do zmodyfikowanego obrazu UEFI przy użyciu następującego polecenia:
-```cmd
+#### Uruchom telefon ze zmodyfikowanego obrazu UEFI za pomocą następującego polecenia:
+``cmd
 fastboot boot boot-lisa-install.img
 ```
-#### Po uruchomieniu do UEFI, wybierz opcję UEFI boot menu, a następnie wybierz ostatnią opcję (SCSI Disk option).
+#### Po uruchomieniu do UEFI, wybierz menu rozruchowe UEFI, a następnie wybierz ostatnią opcję (opcja SCSI Disk)
 
 ### Przypisywanie liter do dysków
-#### Uruchom menedżer dysków Windows z poziomu CMD jako administrator,
-> gdy Xiaomi Mi 11 Lite NE zostanie wykryty jako dysk SCSI.
+#### Uruchom menedżera dysków Windows z CMD jako administrator
+> Gdy Mi 11 Lite NE zostanie wykryty jako dysk SCSI
 
-```cmd
+``cmd
 diskpart
 ```
 
-### Przypisz litery do woluminów Windows i BOOT
+### Przypisywanie litery montażowej do woluminów Windows i BOOT
 
-#### Select the Windows volume of the phone
-> Use `list volume` to find it, it's the one named "WINLISA". Note the vol no.
-```diskpart
-select volume <number>
+#### Wybierz wolumin Windows telefonu
+> Użyj `list volume`, aby go znaleźć, jest to ten o nazwie "WINLISA". Zwróć uwagę na numer woluminu.
+``diskpart
+wybierz wolumin <numer>
 assign letter=w
 ```
-#### Now select the ESP volume of the phone
-> Use `list volume` to find it, it's the one named "ESPLISA". Note the vol no.
+#### Teraz wybierz głośność ESP telefonu
+> Użyj `list volume`, aby go znaleźć, jest to ten o nazwie "ESPLISA". Zwróć uwagę na numer woluminu.
 
-```diskpart
-select volume <number>
+``diskpart
+wybierz wolumin <numer>
 assign letter=s
 ```
-#### Now exit diskpart
-```diskpart
+#### Teraz zamknij diskpart
+``diskpart
 exit
 ```
 
-### Install
-> Replace `<path/to/install.wim>` with the actual path to install.wim, 
-> `install.wim` is located in sources folder inside your ISO (it might also be named `install.esd`), 
-> You can get it either by mounting or extracting the ISO.
+### Instalacja
+> Zastąp `<path/to/install.wim>` rzeczywistą ścieżką do pliku install.wim, 
+> `install.wim` znajduje się w folderze sources wewnątrz ISO (może być również nazwany `install.esd`), 
+> Można go uzyskać poprzez zamontowanie lub rozpakowanie ISO.
 
-> Since the touch on the device doesn't work, you have to use tools like NTlite to edit the ISO to make a local Administration account.
+> Ponieważ dotyk na urządzeniu nie działa, musisz użyć narzędzi takich jak NTlite, aby edytować ISO w celu utworzenia lokalnego konta administracyjnego.
 
-```cmd
-dism /apply-image /ImageFile:<path/to/install.wim> /index:1 /ApplyDir:W:\
+``cmd
+dism /apply-image /ImageFile:<ścieżka/do/install.wim> /index:1 /ApplyDir:W:\
 ```
 
-### Create Windows bootloader files
+### Tworzenie plików bootloadera Windows
 
-```cmd
+``cmd
 bcdboot W:\Windows /s S: /f UEFI
 ```
 
-### Install Drivers
+### Zainstaluj sterowniki
 
-> Replace `<lisadriversfolder>` with the actual location of the drivers folder
+> Zastąp `<lisadriversfolder>` rzeczywistą lokalizacją folderu sterowników.
 
->Extract the zip file downloaded 
-```cmd
+>Rozpakuj pobrany plik zip 
+``cmd
 .\driverupdater.exe -d <lisadriversfolder>\definitions\Desktop\ARM64\Internal\lisa.txt -r <lisadriversfolder> -p W:
 ```
   
-## Allow unsigned drivers
+## Zezwalaj na niepodpisane sterowniki
 
-> If you don't do this you'll get a BSOD
+> Jeśli tego nie zrobisz, otrzymasz BSOD
 
->  S: is the ESP partition
-```cmd
+> S: jest partycją ESP
+``cmd
 cd S:\EFI\Microsoft\Boot
-bcdedit /store BCD /set "{default}" testsigning on
+bcdedit /store BCD /set "{default}" testingigning on
 bcdedit /store BCD /set "{default}" nointegritychecks on
 bcdedit /store BCD /set "{default}" recoveryenabled no
 bcdedit /store BCD /set "{default}" bootstatuspolicy IgnoreAllFailures
 ```
 
 ### Unassign disk letters
-> So that they don't stay there after disconnecting the device
+> Aby nie pozostały tam po odłączeniu urządzenia
 
-Open CMD as Administrator:
-```cmd
+Otwórz CMD jako administrator:
+``cmd
 diskpart
 ```
 
-#### Unassigning Volumes of the phone:
-> Use `list volume` to find it, it's the one named "WINLISA"
+#### Nieprzypisywanie woluminów telefonu:
+> Użyj `list volume` aby go znaleźć, jest to ten o nazwie "WINLISA"
 
-```diskpart
-select volume <number>
-remove letter w
+``diskpart
+wybierz wolumin <numer>
+usuń literę w
 ```
 
-#### Now select the ESP volume of the phone
-> Use `list volume` to find it, it's the one named "ESPLISA"
+#### Teraz wybierz głośność ESP telefonu
+> Użyj `list volume`, aby go znaleźć, jest to ten o nazwie "ESPLISA".
 
-```diskpart
-select volume <number>
-remove letter s
+``diskpart
+select volume <numer>
+usuń literę s
 ```
 
 #### Exit diskpart
-```diskpart
+``diskpart
 exit
 ```
 
-## Boot into Windows
-### Now boot into the lastest compiled UEFI img:
-```cmd
+## Uruchom system Windows
+### Teraz uruchom najnowszy skompilowany img UEFI:
+``cmd
 fastboot boot boot-lisa.img
 ```
 
-### Select the first Windows Option to boot
+### Wybierz pierwszą opcję systemu Windows do uruchomienia
 
-### If Windows rebooted after the setup to android, just go into fastboot the boot the img.
-(I wouldn't recommend to flash the uefi img to boot because currently there is no support for majority of the device hardware and their drivers)
+### Jeśli Windows zrestartował się po instalacji androida, po prostu przejdź do fastboot i uruchom img.
+(Nie polecam flashowania uefi img do rozruchu, ponieważ obecnie nie ma wsparcia dla większości urządzeń i ich sterowników)
 
-### You can launch programs by placing a batch script in startup folder.
+### Możesz uruchamiać programy umieszczając skrypt wsadowy w folderze startowym.
 
-## Finished!
-
+## Gotowe!
