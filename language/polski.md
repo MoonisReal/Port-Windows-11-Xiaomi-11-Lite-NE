@@ -1,3 +1,4 @@
+# ⚠️UWAGA!: Rozwój jest zatrzymany z powodu prac nad sterownikiem ACPI. Jeśli ktoś jest zainteresowany, proszę o pomoc przy sterowniku ACPI. 
 <img align="right" src="https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE/blob/main/lisa.png " width="250" alt="Windows 11 działa na Xiaomi Mi 11 Lite NE">
 
 # Uruchamianie systemu Windows na Xiaomi Mi 11 Lite NE / Mi 11 LE
