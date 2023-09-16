@@ -73,6 +73,3 @@ exit
 
 
 ## Zakończone!!!
-
-
-Przetłumaczono z www.DeepL.com/Translator (wersja darmowa)
