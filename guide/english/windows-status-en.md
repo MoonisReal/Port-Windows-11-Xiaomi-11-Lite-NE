@@ -25,7 +25,6 @@
 | ♋ WiFi                | Requires PCIe and PEP Driver Fixes | ❌             |
 | ♋ Cellular Data       | Requires Modem Processor Subsystem | ❌             |
 | ♋ Cellular Texts      | Requires Modem Processor Subsystem | ❌             |
-| ♋ Cellular eSIM       | Requires Modem Processor Subsystem | ❌             |
 | ♋ Cellular Calls      | Requires Modem Processor Subsystem | ❌             |
 | 🎆 GPU                 | Requires Clock Controller fixes (also the driver crashes due to display the phone has) | ❌             |
 | ♋ Cellular VoLTE      | Requires Modem Processor Subsystem | ❌             |
